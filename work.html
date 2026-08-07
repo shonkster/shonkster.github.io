@@ -1,12 +1,736 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=research.html">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moved | Nicholas Shonkwiler</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="refresh" content="0; url=/research.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The former Work page has moved to Research." />
+  <title>Page Moved | Nicholas Shonkwiler</title>
+  <style>
+:root {
+  --bg: #f7f9fc;
+  --surface: #ffffff;
+  --text: #172033;
+  --muted: #667085;
+  --primary: #315efb;
+  --primary-dark: #2448c7;
+  --border: #e6eaf0;
+  --soft: #edf2ff;
+  --soft-2: #f1f5fb;
+  --shadow: 0 18px 45px rgba(24, 39, 75, 0.09);
+  --radius: 20px;
+  --max-width: 1120px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
+
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font: inherit; }
+.container { width: min(92%, var(--max-width)); margin: 0 auto; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(247, 249, 252, 0.93);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(230, 234, 240, 0.9);
+}
+
+nav {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  list-style: none;
+  color: var(--muted);
+  font-weight: 650;
+  font-size: 0.94rem;
+}
+
+.nav-links > li { position: relative; }
+
+.nav-links a,
+.dropdown-toggle {
+  transition: color .2s ease, background .2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus,
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
+  color: var(--primary);
+  outline: none;
+}
+
+.dropdown-toggle {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: inherit;
+}
+
+.chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 15px);
+  right: 0;
+  width: 245px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: .18s ease;
+}
+
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 9px;
+  color: var(--text);
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus {
+  background: var(--soft);
+  color: var(--primary);
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu,
+.dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.subproject-label {
+  padding: 10px 12px 5px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.subproject-list {
+  list-style: none;
+  margin: 0 0 4px 12px;
+  padding-left: 10px;
+  border-left: 2px solid var(--soft);
+}
+
+.subproject-list a {
+  padding: 8px 10px;
+  font-size: 0.91rem;
+}
+
+.menu-button {
+  display: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  display: block;
+  position: relative;
+  content: "";
+}
+
+.menu-icon::before { position: absolute; top: -6px; }
+.menu-icon::after { position: absolute; top: 6px; }
+
+.hero { padding: 92px 0 72px; }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.13fr .87fr;
+  gap: 58px;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--primary);
+  font-size: .9rem;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+h1 {
+  font-size: clamp(3rem, 7.5vw, 5.5rem);
+  line-height: .98;
+  letter-spacing: -.055em;
+  max-width: 850px;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -.04em;
+  line-height: 1.08;
+}
+
+h3 { line-height: 1.2; }
+
+.hero h1 span { color: var(--primary); }
+
+.hero p {
+  margin-top: 24px;
+  max-width: 740px;
+  font-size: 1.13rem;
+  color: var(--muted);
+}
+
+.hero-actions,
+.button-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-weight: 750;
+  border: 1px solid transparent;
+  transition: .2s ease;
+}
+
+.btn-primary { color: #fff; background: var(--primary); }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover { border-color: #cfd6e2; transform: translateY(-1px); }
+
+.profile-card {
+  background: linear-gradient(145deg, #fff, #edf2ff);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.profile-photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 24%;
+  border-radius: 20px;
+}
+
+section { padding: 74px 0; }
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.section-heading > p {
+  max-width: 580px;
+  color: var(--muted);
+}
+
+.about-card,
+.contact-card,
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 34px;
+  box-shadow: var(--shadow);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 34px;
+}
+
+.about-copy p + p { margin-top: 16px; }
+.about-copy p, .muted { color: var(--muted); }
+.about-copy a, .text-link { color: var(--primary); font-weight: 700; }
+
+.quick-facts { display: grid; gap: 14px; }
+
+.fact {
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #f8faff;
+  border: 1px solid var(--border);
+}
+
+.fact strong { display: block; margin-bottom: 3px; }
+.fact span { color: var(--muted); font-size: .95rem; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+  min-height: 245px;
+  box-shadow: 0 12px 30px rgba(24, 39, 75, .05);
+  transition: .2s ease;
+}
+
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+.card-number {
+  display: inline-grid;
+  place-items: center;
+  min-width: 42px;
+  height: 42px;
+  padding: 0 11px;
+  border-radius: 12px;
+  background: var(--soft);
+  color: var(--primary);
+  font-weight: 800;
+  margin-bottom: 24px;
+  font-size: .78rem;
+}
+
+.card h3 { margin-bottom: 10px; font-size: 1.17rem; }
+.card p { color: var(--muted); font-size: .97rem; }
+.card p + p { margin-top: 10px; }
+
+.card a {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.soft-section { background: var(--soft-2); }
+
+.contact-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 30px;
+  align-items: center;
+}
+
+.contact-card p {
+  color: var(--muted);
+  max-width: 680px;
+  margin-top: 8px;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.app-shell {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.app-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+}
+
+.app-nav a {
+  padding: 9px 13px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.app-nav a:hover,
+.app-nav a.active {
+  color: var(--primary);
+  border-color: #c8d2ef;
+  background: var(--soft);
+}
+
+.policy {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.policy .panel + .panel { margin-top: 20px; }
+.policy h2 { font-size: 1.55rem; margin-bottom: 10px; letter-spacing: -.025em; }
+.policy h3 { margin: 22px 0 8px; font-size: 1.05rem; }
+.policy p, .policy li { color: var(--muted); }
+.policy ul { padding-left: 22px; margin-top: 10px; }
+.policy li + li { margin-top: 6px; }
+
+.notice {
+  margin-top: 22px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid #d6dff6;
+  background: #f7f9ff;
+  color: var(--muted);
+}
+
+.feature-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.feature-item {
+  padding: 17px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fafbfe;
+}
+
+.feature-item strong { display: block; margin-bottom: 4px; }
+.feature-item span { color: var(--muted); font-size: .94rem; }
+
+.support-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.support-grid .panel { box-shadow: 0 12px 30px rgba(24, 39, 75, .05); }
+
+.small { font-size: .9rem; color: var(--muted); }
+
+footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  padding: 28px 0 36px;
+  font-size: .92rem;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .hero-grid, .about-grid, .contact-card { grid-template-columns: 1fr; }
+  .profile-card { max-width: 470px; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .section-heading { align-items: start; flex-direction: column; }
+  .contact-actions { justify-content: flex-start; }
+}
+
+@media (max-width: 720px) {
+  nav { position: relative; }
+  .menu-button { display: inline-flex; }
+
+  .nav-links {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 72px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0 0 16px 16px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+  }
+
+  .nav-links.open { display: flex; }
+
+  .nav-links > li > a,
+  .dropdown-toggle {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 9px;
+    justify-content: space-between;
+  }
+
+  .dropdown-menu {
+    position: static;
+    width: auto;
+    box-shadow: none;
+    border: 0;
+    padding: 0 0 4px 14px;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+  }
+
+  .dropdown.open .dropdown-menu { display: block; }
+  .dropdown-menu a { padding: 9px 12px; }
+
+  .hero { padding-top: 66px; }
+  section { padding: 56px 0; }
+  .about-card, .contact-card, .panel { padding: 24px; }
+  .brand { font-size: 1rem; }
+  .cards, .feature-list, .support-grid { grid-template-columns: 1fr; }
+}
+
+
+.recreation-menu {
+  width: 215px;
+}
+
+@media (max-width: 720px) {
+  .recreation-menu {
+    width: auto;
+  }
+}
+
+.nav-links a[aria-current="page"] {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+</style>
 </head>
 <body>
-  <p>This page has moved to <a href="research.html">Research</a>.</p>
+<header>
+  <div class="container">
+    <nav aria-label="Primary navigation">
+      <a class="brand" href="/">Nicholas Shonkwiler</a>
+
+      <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-expanded="false">
+        <span class="menu-icon"></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
+
+        <li class="dropdown" id="projectsDropdown">
+          <button class="dropdown-toggle" id="projectsToggle" aria-expanded="false" aria-haspopup="true">
+            Projects <span class="chevron" aria-hidden="true"></span>
+          </button>
+
+          <ul class="dropdown-menu" aria-label="Projects submenu">
+            <li><a href="/medicine.html">Medicine</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li>
+              <a href="/app-development.html">App Development</a>
+              <ul class="subproject-list">
+                <li><a href="/drug-of-the-day.html">Drug of the Day</a></li>
+              </ul>
+            </li>
+            <li><a href="/product-development.html">Product Development</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown" id="recreationDropdown">
+          <button class="dropdown-toggle" id="recreationToggle" aria-expanded="false" aria-haspopup="true">
+            Recreation <span class="chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="dropdown-menu recreation-menu" aria-label="Recreation submenu">
+            <li><a href="/recreation.html">Overview</a></li>
+            <li><a href="/parks.html">National Parks</a></li>
+            <li><a href="/cool-websites.html">Cool Websites</a></li>
+            <li><a href="/cooking.html">Cooking</a></li>
+          </ul>
+        </li>
+
+        <li><a href="/cv.html">CV / Resume</a></li>
+        <li><a href="/articles.html">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Page Moved</div>
+      <h1>Work is now Research.</h1>
+      <p>
+        The previous Work page has been reorganized into the Research section.
+        You should be redirected automatically.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/research.html">Go to Research</a>
+        <a class="btn btn-secondary" href="/">Go Home</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <span>© <span id="year"></span> Nicholas Shonkwiler. All rights reserved.</span>
+    <span>Research</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const menuButton = document.getElementById("menuButton");
+  const navLinks = document.getElementById("navLinks");
+
+  if (menuButton && navLinks) {
+    menuButton.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(open));
+    });
+  }
+
+  const dropdownPairs = [
+    ["projectsDropdown", "projectsToggle"],
+    ["recreationDropdown", "recreationToggle"]
+  ];
+
+  dropdownPairs.forEach(([dropdownId, toggleId]) => {
+    const dropdown = document.getElementById(dropdownId);
+    const toggle = document.getElementById(toggleId);
+
+    if (!dropdown || !toggle) return;
+
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      dropdownPairs.forEach(([otherDropdownId, otherToggleId]) => {
+        if (otherDropdownId === dropdownId) return;
+        document.getElementById(otherDropdownId)?.classList.remove("open");
+        document.getElementById(otherToggleId)?.setAttribute("aria-expanded", "false");
+      });
+
+      const open = dropdown.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    dropdownPairs.forEach(([dropdownId, toggleId]) => {
+      const dropdown = document.getElementById(dropdownId);
+      const toggle = document.getElementById(toggleId);
+      if (dropdown && !dropdown.contains(event.target)) {
+        dropdown.classList.remove("open");
+        toggle?.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks?.classList.remove("open");
+      menuButton?.setAttribute("aria-expanded", "false");
+
+      dropdownPairs.forEach(([dropdownId, toggleId]) => {
+        document.getElementById(dropdownId)?.classList.remove("open");
+        document.getElementById(toggleId)?.setAttribute("aria-expanded", "false");
+      });
+    });
+  });
+
+  // Highlight the link for the page currently being viewed.
+  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  document.querySelectorAll(".nav-links a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("/#")) return;
+
+    const normalizedHref = href.replace(/\/+$/, "") || "/";
+    if (
+      normalizedHref === currentPath ||
+      (currentPath === "/index.html" && normalizedHref === "/")
+    ) {
+      link.setAttribute("aria-current", "page");
+    }
+  });
+
+</script>
 </body>
 </html>

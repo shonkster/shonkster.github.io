@@ -570,6 +570,12 @@ footer {
     width: auto;
   }
 }
+
+.nav-links a[aria-current="page"] {
+  color: var(--primary);
+  font-weight: 800;
+}
+
 </style>
 </head>
 <body>
@@ -578,15 +584,15 @@ footer {
 <header>
   <div class="container">
     <nav aria-label="Primary navigation">
-      <a class="brand" href="index.html">Nicholas Shonkwiler</a>
+      <a class="brand" href="/">Nicholas Shonkwiler</a>
 
       <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-expanded="false">
         <span class="menu-icon"></span>
       </button>
 
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
 
         <li class="dropdown" id="projectsDropdown">
           <button class="dropdown-toggle" id="projectsToggle" aria-expanded="false" aria-haspopup="true">
@@ -594,15 +600,15 @@ footer {
           </button>
 
           <ul class="dropdown-menu" aria-label="Projects submenu">
-            <li><a href="medicine.html">Medicine</a></li>
-            <li><a href="research.html">Research</a></li>
+            <li><a href="/medicine.html">Medicine</a></li>
+            <li><a href="/research.html">Research</a></li>
             <li>
-              <a href="app-development.html">App Development</a>
+              <a href="/app-development.html">App Development</a>
               <ul class="subproject-list">
-                <li><a href="drug-of-the-day.html">Drug of the Day</a></li>
+                <li><a href="/drug-of-the-day.html">Drug of the Day</a></li>
               </ul>
             </li>
-            <li><a href="product-development.html">Product Development</a></li>
+            <li><a href="/product-development.html">Product Development</a></li>
           </ul>
         </li>
 
@@ -611,16 +617,16 @@ footer {
             Recreation <span class="chevron" aria-hidden="true"></span>
           </button>
           <ul class="dropdown-menu recreation-menu" aria-label="Recreation submenu">
-            <li><a href="recreation.html">Overview</a></li>
-            <li><a href="parks.html">National Parks</a></li>
-            <li><a href="cool-websites.html">Cool Websites</a></li>
-            <li><a href="cooking.html">Cooking</a></li>
+            <li><a href="/recreation.html">Overview</a></li>
+            <li><a href="/parks.html">National Parks</a></li>
+            <li><a href="/cool-websites.html">Cool Websites</a></li>
+            <li><a href="/cooking.html">Cooking</a></li>
           </ul>
         </li>
 
-        <li><a href="cv.html">CV / Resume</a></li>
-        <li><a href="articles.html">Articles</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="/cv.html">CV / Resume</a></li>
+        <li><a href="/articles.html">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
       </ul>
     </nav>
   </div>
@@ -642,8 +648,8 @@ footer {
       </p>
 
       <div class="hero-actions">
-        <a class="btn btn-primary" href="research.html">Explore my research</a>
-        <a class="btn btn-secondary" href="drug-of-the-day.html">Drug of the Day</a>
+        <a class="btn btn-primary" href="/research.html">Explore my research</a>
+        <a class="btn btn-secondary" href="/drug-of-the-day.html">Drug of the Day</a>
         <a class="btn btn-secondary" href="https://www.linkedin.com/in/nicholasshonkwiler/" target="_blank" rel="noopener noreferrer">
           LinkedIn
         </a>
@@ -792,6 +798,22 @@ footer {
       });
     });
   });
+
+  // Highlight the link for the page currently being viewed.
+  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  document.querySelectorAll(".nav-links a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("/#")) return;
+
+    const normalizedHref = href.replace(/\/+$/, "") || "/";
+    if (
+      normalizedHref === currentPath ||
+      (currentPath === "/index.html" && normalizedHref === "/")
+    ) {
+      link.setAttribute("aria-current", "page");
+    }
+  });
+
 </script>
 
 </body>
