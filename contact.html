@@ -559,9 +559,21 @@ footer {
   .brand { font-size: 1rem; }
   .cards, .feature-list, .support-grid { grid-template-columns: 1fr; }
 }
+
+
+.recreation-menu {
+  width: 215px;
+}
+
+@media (max-width: 720px) {
+  .recreation-menu {
+    width: auto;
+  }
+}
 </style>
 </head>
 <body>
+
 
 <header>
   <div class="container">
@@ -594,13 +606,26 @@ footer {
           </ul>
         </li>
 
-        <li><a href="recreation.html">Recreation</a></li>
+        <li class="dropdown" id="recreationDropdown">
+          <button class="dropdown-toggle" id="recreationToggle" aria-expanded="false" aria-haspopup="true">
+            Recreation <span class="chevron" aria-hidden="true"></span>
+          </button>
+          <ul class="dropdown-menu recreation-menu" aria-label="Recreation submenu">
+            <li><a href="recreation.html">Overview</a></li>
+            <li><a href="parks.html">National Parks</a></li>
+            <li><a href="cool-websites.html">Cool Websites</a></li>
+            <li><a href="cooking.html">Cooking</a></li>
+          </ul>
+        </li>
+
+        <li><a href="cv.html">CV / Resume</a></li>
         <li><a href="articles.html">Articles</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </div>
 </header>
+
 
 <main>
 
@@ -644,13 +669,12 @@ footer {
 </footer>
 
 
+
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 
   const menuButton = document.getElementById("menuButton");
   const navLinks = document.getElementById("navLinks");
-  const projectsDropdown = document.getElementById("projectsDropdown");
-  const projectsToggle = document.getElementById("projectsToggle");
 
   if (menuButton && navLinks) {
     menuButton.addEventListener("click", () => {
@@ -659,27 +683,51 @@ footer {
     });
   }
 
-  if (projectsToggle && projectsDropdown) {
-    projectsToggle.addEventListener("click", (event) => {
-      event.stopPropagation();
-      const open = projectsDropdown.classList.toggle("open");
-      projectsToggle.setAttribute("aria-expanded", String(open));
-    });
+  const dropdownPairs = [
+    ["projectsDropdown", "projectsToggle"],
+    ["recreationDropdown", "recreationToggle"]
+  ];
 
-    document.addEventListener("click", (event) => {
-      if (!projectsDropdown.contains(event.target)) {
-        projectsDropdown.classList.remove("open");
-        projectsToggle.setAttribute("aria-expanded", "false");
+  dropdownPairs.forEach(([dropdownId, toggleId]) => {
+    const dropdown = document.getElementById(dropdownId);
+    const toggle = document.getElementById(toggleId);
+
+    if (!dropdown || !toggle) return;
+
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      dropdownPairs.forEach(([otherDropdownId, otherToggleId]) => {
+        if (otherDropdownId === dropdownId) return;
+        document.getElementById(otherDropdownId)?.classList.remove("open");
+        document.getElementById(otherToggleId)?.setAttribute("aria-expanded", "false");
+      });
+
+      const open = dropdown.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    dropdownPairs.forEach(([dropdownId, toggleId]) => {
+      const dropdown = document.getElementById(dropdownId);
+      const toggle = document.getElementById(toggleId);
+      if (dropdown && !dropdown.contains(event.target)) {
+        dropdown.classList.remove("open");
+        toggle?.setAttribute("aria-expanded", "false");
       }
     });
-  }
+  });
 
   document.querySelectorAll(".nav-links a").forEach((link) => {
     link.addEventListener("click", () => {
       navLinks?.classList.remove("open");
       menuButton?.setAttribute("aria-expanded", "false");
-      projectsDropdown?.classList.remove("open");
-      projectsToggle?.setAttribute("aria-expanded", "false");
+
+      dropdownPairs.forEach(([dropdownId, toggleId]) => {
+        document.getElementById(dropdownId)?.classList.remove("open");
+        document.getElementById(toggleId)?.setAttribute("aria-expanded", "false");
+      });
     });
   });
 </script>
